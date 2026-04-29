@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [isSignup, setIsSignup] = useState(false);
+
+  const role = localStorage.getItem("role"); // ✅ get role
+
+  // NOT LOGGED IN
+  if (!token) {
+    return isSignup ? (
+      <Signup switchToLogin={() => setIsSignup(false)} />
+    ) : (
+      <Login
+        setToken={setToken}
+        switchToSignup={() => setIsSignup(true)}
+      />
+    );
+  }
+
+  // LOGGED IN → ROLE BASED
+  if (role === "admin") {
+    return <Dashboard />;
+  } else {
+    return <Profile />;
+  }
 }
 
 export default App;
