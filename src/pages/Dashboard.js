@@ -1,93 +1,85 @@
 import { useState } from "react";
 import LanguageForm from "../components/LanguageForm";
 import LanguageList from "../components/LanguageList";
+import UserList from "../components/UserList";
 
 export default function Dashboard() {
+  const [activeTab, setActiveTab] = useState("dashboard");
   const [refresh, setRefresh] = useState(false);
 
-  const handleRefresh = () => {
-    setRefresh(!refresh);
-  };
-
   const logout = () => {
-    localStorage.removeItem("token");
+    localStorage.clear();
     window.location.reload();
   };
 
-  return (
-    <div style={styles.container}>
+  const renderContent = () => {
+    switch (activeTab) {
+      case "dashboard":
+        return (
+          <div className="bg-white p-6 rounded-xl shadow">
+            <h2 className="text-xl font-semibold text-center">
+              Welcome to Language Translator App <br /> Admin Dashboard
+            </h2>
+            
+          </div>
+          
+          
+        );
 
-      {/* HEADER */}
-      <div style={styles.header}>
-        <h2 style={styles.title}>🌍 Language Admin</h2>
-        <button style={styles.logoutBtn} onClick={logout}>
+      case "add":
+        return <LanguageForm onAdded={() => setRefresh(!refresh)} />;
+
+      case "list":
+        return <LanguageList refresh={refresh} />;
+
+      case "users":
+        return <UserList />;
+
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="flex min-h-screen bg-gray-100">
+
+      {/* SIDEBAR */}
+      <div className="w-60 bg-[#03228f] text-white flex flex-col p-5">
+
+        <h2 className="text-xl font-bold mb-6">🌍 Admin</h2>
+
+        <SidebarItem label="Dashboard" active={activeTab === "dashboard"} onClick={() => setActiveTab("dashboard")} />
+        <SidebarItem label="Add Language" active={activeTab === "add"} onClick={() => setActiveTab("add")} />
+        <SidebarItem label="All Languages" active={activeTab === "list"} onClick={() => setActiveTab("list")} />
+        <SidebarItem label="Users" active={activeTab === "users"} onClick={() => setActiveTab("users")} />
+
+        <button
+          onClick={logout}
+          className="mt-auto text-red-400 hover:text-red-500 text-left"
+        >
           Logout
         </button>
       </div>
 
-      {/* MAIN CONTENT */}
-      <div style={styles.content}>
-
-        {/* LEFT: ADD FORM */}
-        <div style={styles.card}>
-          <h3 style={styles.cardTitle}>Add Language</h3>
-          <LanguageForm onAdded={handleRefresh} />
-        </div>
-
-        {/* RIGHT: LIST */}
-        <div style={styles.card}>
-          <h3 style={styles.cardTitle}>All Languages</h3>
-          <LanguageList refresh={refresh} />
-        </div>
-
+      {/* CONTENT */}
+      <div className="flex-1 p-6 max-w-5xl mx-auto">
+        {renderContent()}
       </div>
     </div>
   );
 }
 
-const styles = {
-  container: {
-    minHeight: "100vh",
-    background: "#f4f6f8",
-    padding: 20,
-  },
-
-  header: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 20,
-  },
-
-  title: {
-    margin: 0,
-    color: "#03228f", // brand color
-  },
-
-  logoutBtn: {
-    padding: "8px 14px",
-    background: "#ff4d4f",
-    color: "#fff",
-    border: "none",
-    borderRadius: 6,
-    cursor: "pointer",
-  },
-
-  content: {
-    display: "grid",
-    gridTemplateColumns: "1fr 2fr",
-    gap: 20,
-  },
-
-  card: {
-    background: "#fff",
-    padding: 20,
-    borderRadius: 12,
-    boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-  },
-
-  cardTitle: {
-    marginBottom: 15,
-    color: "#333",
-  },
-};
+function SidebarItem({ label, active, onClick }) {
+  return (
+    <div
+      onClick={onClick}
+      className={`p-3 rounded-lg cursor-pointer mb-2 transition ${
+        active
+          ? "bg-white text-[#03228f] font-semibold"
+          : "hover:bg-white/10"
+      }`}
+    >
+      {label}
+    </div>
+  );
+}

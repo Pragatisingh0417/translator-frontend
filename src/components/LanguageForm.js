@@ -35,9 +35,9 @@ export default function LanguageForm({ onAdded }) {
       onAdded();
 
     } catch (err) {
-      alert("Error adding language");
-      console.log(err);
-    }
+  const msg = err.response?.data?.msg || "Error adding language";
+  alert(msg);
+}
   };
 
   return (
