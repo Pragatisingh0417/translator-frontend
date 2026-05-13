@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export default function DeleteAccount() {
   const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+  const [submitted] = useState(false);
 
   const [message, setMessage] = useState("");
 const [error, setError] = useState("");
@@ -16,7 +16,7 @@ const handleDeleteRequest = async (e) => {
   setError("");
 
   try {
-    const res = await fetch("http://localhost:5000/api/delete-account", {
+    const res = await fetch("https://language-backend-f9qf.onrender.com/api/delete-account", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
