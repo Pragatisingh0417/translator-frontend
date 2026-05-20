@@ -26,10 +26,10 @@ export default function ResetPassword() {
         }       
       );
 
-      alert(res.data.msg);
+      alert(
+    "Password reset successful. Please go back to the app and login with your new password."
+  );
 
-      // Redirect to login
-      navigate("/");
 
     } catch (err) {
 
