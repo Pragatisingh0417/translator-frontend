@@ -17,7 +17,7 @@ export default function LanguageForm({ onAdded }) {
       const token = localStorage.getItem("token");
 
       await axios.post(
-        "https://language-backend-f9qf.onrender.com/api/languages",
+        "https://api.mothertonguetranslator.com/api/languages",
         { name, code, locale, flag }, // ✅ FIXED (locale added)
         {
           headers: {

@@ -16,7 +16,7 @@ const handleDeleteRequest = async (e) => {
   setError("");
 
   try {
-    const res = await fetch("https://language-backend-f9qf.onrender.com/api/delete-account", {
+    const res = await fetch("https://api.mothertonguetranslator.com/api/delete-account", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

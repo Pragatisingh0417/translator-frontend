@@ -16,7 +16,7 @@ export default function Profile() {
         const token = localStorage.getItem("token");
 
         const res = await axios.get(
-          "https://language-backend-f9qf.onrender.com/api/auth/profile",
+          "https://api.mothertonguetranslator.com/api/auth/profile",
           {
             headers: {
               Authorization: `Bearer ${token}`,

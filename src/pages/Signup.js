@@ -16,7 +16,7 @@ export default function Signup({ switchToLogin }) {
 
     try {
       await axios.post(
-        "https://language-backend-f9qf.onrender.com/api/auth/signup",
+        "https://api.mothertonguetranslator.com/api/auth/signup",
         { name, email, password, dob, gender }
       );
 

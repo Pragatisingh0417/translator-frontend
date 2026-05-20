@@ -6,6 +6,7 @@ import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import DeleteAccount from "./pages/DeleteAccount";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));
@@ -15,38 +16,43 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
+  <Routes>
 
-        {/* PUBLIC ROUTE */}
-        <Route path="/delete-account" element={<DeleteAccount />} />
+  {/* PUBLIC ROUTES */}
+  <Route path="/delete-account" element={<DeleteAccount />} />
 
-        {/* NOT LOGGED IN */}
-        {!token ? (
-          <Route
-            path="*"
-            element={
-              isSignup ? (
-                <Signup switchToLogin={() => setIsSignup(false)} />
-              ) : (
-                <Login
-                  setToken={setToken}
-                  switchToSignup={() => setIsSignup(true)}
-                />
-              )
-            }
-          />
+  <Route
+    path="/reset-password/:token"
+    element={<ResetPassword />}
+  />
+
+  {/* NOT LOGGED IN */}
+  {!token ? (
+    <Route
+      path="*"
+      element={
+        isSignup ? (
+          <Signup switchToLogin={() => setIsSignup(false)} />
         ) : (
-          <>
-            {/* ADMIN */}
-            {role === "admin" ? (
-              <Route path="*" element={<Dashboard />} />
-            ) : (
-              <Route path="*" element={<Profile />} />
-            )}
-          </>
-        )}
+          <Login
+            setToken={setToken}
+            switchToSignup={() => setIsSignup(true)}
+          />
+        )
+      }
+    />
+  ) : (
+    <>
+      {/* ADMIN */}
+      {role === "admin" ? (
+        <Route path="*" element={<Dashboard />} />
+      ) : (
+        <Route path="*" element={<Profile />} />
+      )}
+    </>
+  )}
 
-      </Routes>
+</Routes>
     </BrowserRouter>
   );
 }

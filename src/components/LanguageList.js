@@ -6,7 +6,7 @@ export default function LanguageList({ refresh }) {
 
   const fetchLanguages = async () => {
     const res = await axios.get(
-      "https://language-backend-f9qf.onrender.com/api/languages"
+      "https://api.mothertonguetranslator.com/api/languages"
     );
     setLanguages(res.data);
   };
@@ -16,7 +16,7 @@ export default function LanguageList({ refresh }) {
       const token = localStorage.getItem("token");
 
       await axios.delete(
-        `https://language-backend-f9qf.onrender.com/api/languages/${id}`,
+        `https://api.mothertonguetranslator.com/api/languages/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

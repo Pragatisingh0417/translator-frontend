@@ -7,7 +7,7 @@ export default function UserList() {
   useEffect(() => {
     const fetchUsers = async () => {
       const res = await axios.get(
-        "https://language-backend-f9qf.onrender.com/api/auth/users"
+        "https://api.mothertonguetranslator.com/api/auth/users"
       );
       setUsers(res.data);
     };
